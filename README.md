@@ -1,4 +1,4 @@
-# Kerr-Lens Simulator (KLM_Sim)
+# Kerr-Lens Simulator (KLM-Sim)
 Open-source MATLAB package for simulating the spatio-temporal dynamics of a Kerr-lens mode-locked laser.
 
 # Citation
