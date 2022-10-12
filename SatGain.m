@@ -1,4 +1,4 @@
-function g = sat_gain(Ew,w,g0,Is,Wp)
+function g = SatGain(Ew,w,g0,Is,Wp)
 Imean = mean(abs(Ew).^2); % mean roundtrip intensity
 Wmin = min(w);
 if Wmin < Wp

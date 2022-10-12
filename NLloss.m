@@ -1,4 +1,4 @@
-function l = loss_gain(w,Wp)
+function l = NLloss(w,Wp)
 for i = 1:length(w)
     if w(i) <= Wp
         l(i) = 1;

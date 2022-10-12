@@ -1,6 +1,8 @@
 %% Simulation of electromagnetic field in a cavity
 clear;
 run('settings.m')
+figure(1);
+
 
 % Units:
 % time - 1 round-trip
@@ -33,14 +35,6 @@ q = zeros(num_rounds, n); % instantaneous waist size
 F = zeros(num_rounds, n); % kerr lens focus
 
 
-% figures
-% % % % % % % % % % % % % % % % % % % % %
-f1 = figure(1);
-ax1 = subplot(1,2,1, 'Parent', f1);
-ax2 = subplot(1,2,2, 'Parent', f1);
-
-% % % % % % % % % % % % % % % % % % % % %
-
 
 
 
@@ -69,7 +63,7 @@ for m = 2:num_rounds % for each round-trip
     
     % Nonlinear effects calculated in time
     
-    [q(m,:)] = MLSpatial( delta,Et(m - 1, :),It(m - 1, :), q(m-1,:), waist(m-1, :), Ikl, L, deltaPlane); % New waist calculation MLSpatial
+    [q(m,:)] = MLSpatial_gain( delta,Et(m - 1, :),It(m - 1, :), q(m-1,:), waist(m-1, :), Ikl, L, deltaPlane); % New waist calculation MLSpatial
     
     waist(m, :) = (-imag(1./q(m, :))*pi./lambda).^(-1/2);
     Et(m, :) = phiKerr(It(m - 1, :),waist(m, :)).*NLloss(waist(m,:),Wp).*Et(m - 1,:);
@@ -97,11 +91,8 @@ for m = 2:num_rounds % for each round-trip
     
     
     %  plots
-    plot(ax1, t,  abs(Et(m,:)).^2);
-    title(ax1,'Power');
-    plot(ax2, t, waist(m,:));
-    title(ax2,'Waist');
-   
+    plot( t,  abs(Et(m,:)).^2);
+    title('Power');
     
     if mod(m,1)== 0
         disp([m]);

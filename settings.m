@@ -14,17 +14,17 @@ n2 = 3e-20; % n2 of sapphire m^2/W
 L = 3e-3; % crystal length
 kerr_par = 4*L*n2;%
 N = 5; % number of NL lenses in the crystal
-Ikl = kerr_par/50/N;%kerr_par
-Is = 2.6*n^2*1000; % saturation power
+Ikl = kerr_par/N/50;%kerr_par
+Is = 2.6*n^2*500; % saturation power
 Wp = 30e-6;
 
 
 mirror_loss = 0.95; % loss of the OC
-spec_G_par = 1000; %gaussian linewidth parameter
-SNR = 1e-3;
+spec_G_par = 200; %gaussian linewidth parameter
+SNR = 0e-3;
 lambda = 780e-9;
 delta = 0.001; % how far we go into the stability gap 
 
 deltaPlane = -0.75e-3; % position of crystal - distance from the "plane" lens focal
 disp_par = 0*1e-3*2*pi/spec_G_par; % net dispersion 
-epsilon = 0.17;
+epsilon = 0.2;
