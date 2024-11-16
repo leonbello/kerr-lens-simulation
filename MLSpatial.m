@@ -1,4 +1,4 @@
-function [qt] = MLSpatial_pos(delta, Et,Pt, q1, W1, Ikl ,L,deltaPlane)
+function [qt] = MLSpatial(delta, Et,Pt, q1, W1, Ikl ,L,deltaPlane)
 
 
 deltaPoint = delta - deltaPlane;
@@ -10,8 +10,6 @@ L1 = 0.5;
 L2 = 0.9;
 V = 1/(2/RM-1/L2);
 N = 5; % number of NL lenses
-n0 = 1.76; linear refractive index of Ti:S
-L = n0*L; % OPL of the crystal
 
 Mcur = @(RM)[ 1 0 ; -2/RM 1];
 distance = @(d)[ 1 d ; 0 1];
@@ -41,7 +39,7 @@ for i=1:length(Et)
     Pt2(i) = abs(Et2(i)).^2;   
     Feff21(i) = (W2(i).^4)./(Ikl.*Pt2(i));  
     
-    M(:,:,i) = distance(L/(N+1))*lensL(Feff21(i),f);
+    M(:,:,i) = distance(L/(N))*lensL(Feff21(i),f);
     
     %     % Lens #3
     
@@ -71,7 +69,7 @@ for i=1:length(Et)
     Pt5(i) = abs(Et5(i)).^2;
     Feff51(i) = (W5(i).^4)./(Ikl.*Pt5(i));
   
-    M(:,:,i) = distance(L/(2*N))*distance(RM/2+deltaPlane-eps-L/2)*Mcur(RM)*distance(L1)*[1 0; 0 1]*distance(L1)*Mcur(RM)*distance(RM/2+deltaPlane-eps-L/2)*distance(L/(2*N))*lensL(Feff51(i),f);
+    M(:,:,i) = distance(L/(N * 2))*distance(RM/2+deltaPlane-eps-L/2)*Mcur(RM)*distance(L1)*[1 0; 0 1]*distance(L1)*Mcur(RM)*distance(RM/2+deltaPlane-eps-L/2)*distance(L/(N * 2))*lensL(Feff51(i),f);
     
     % Lens #52
     
@@ -121,7 +119,7 @@ for i=1:length(Et)
     Pt(i) = abs(Et(i)).^2;    
     Feff12(i) = (W1(i).^4)./(Ikl.*Pt(i));
     
-    M(:,:,i) = distance(L/(2*N))*distance(V+deltaPoint-L/2)*lens(FM)*distance(L2)*[1 0; 0 1]*distance(L2)*lens(FM)*distance(V+deltaPoint-L/2)*distance(L/(2*N))*lensL(Feff12(i),f);
+    M(:,:,i) = distance(L/(N * 2))*distance(V+deltaPoint-L/2)*lens(FM)*distance(L2)*[1 0; 0 1]*distance(L2)*lens(FM)*distance(V+deltaPoint-L/2)*distance(L/(N * 2))*lensL(Feff12(i),f);
      
     qt(i) =  (M(1,1,i).*q1(i)+M(1,2,i))./(M(2,1,i).*q1(i)+M(2,2,i));
     
